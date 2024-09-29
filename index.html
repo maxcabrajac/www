@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<head>
+	<link rel="preload" href="FORCED SQUARE.ttf" as="font" crossorigin=anonymous></link>
+	<script src="index.js"></script>
+	<style>
+		html {
+			overflow-x: hidden;
+		}
+
+		@font-face {
+			font-family: 'main';
+			src: url("FORCED SQUARE.ttf");
+		}
+
+		* {
+			margin: 0;
+			font-family: 'main';
+			font-size: 25px;
+			letter-spacing: .2rem;
+		}
+
+		#content {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			width: 100lvw;
+			min-height: 100lvh;
+		}
+
+		#content > * {
+			width: fit-content;
+		}
+
+		.c1 {
+			color: blue;
+		}
+
+		.c2 {
+			color: green;
+		}
+
+		.c3 {
+			color: red;
+		}
+
+		.c4 {
+			color: darkblue;
+		}
+
+		.c5 {
+			color: firebrick;
+		}
+
+		.c6 {
+			color: darkcyan;
+		}
+
+		.c7 {
+			color: black;
+		}
+
+		.c8 {
+			color: dimgray;
+		}
+
+		h1 {
+			font-size: 5em;
+		}
+
+		.spacer {
+			padding: 5em 0 0 0;
+		}
+
+		a {
+			text-decoration: inherit;
+			color: inherit;
+		}
+
+		.links tr td:nth-child(2) {
+			text-align: right;
+		}
+
+
+	</style>
+</head>
+<body onload="main()">
+	<div id="content">
+		<h1 class="c1">Max</h1>
+		<div class="spacer"></div>
+		<table class="links">
+			<tr>
+				<td>Contact</td>
+				<td><a href="mailto:max@cabrajac.com">max@cabrajac.com</a></td>
+			</tr>
+			<tr>
+				<td>GitLab</td>
+				<td><a href="http://gitlab.com/maxcabrajac">@maxcabrajac</a></td>
+			</tr>
+			<tr>
+				<td>GitHub</td>
+				<td><a href="http://github.com/maxcabrajac">@maxcabrajac</a></td>
+			</tr>
+			<tr>
+				<td>LinkedIn</td>
+				<td><a href="http://linkedin.com/in/maxcabrajac">@maxcabrajac</a></td>
+			</tr>
+		</table>
+	</div>
+</body>
