@@ -121,16 +121,22 @@ class Game {
 		this.propagateNumbers()
 	}
 
-	hit(i, j, recurse = true, force = false) {
+	/*
+	 * @param (integer) propagate
+	 *     0 => never propagate
+	 * 	 1 => propagate if needed
+	 * 	 2 => always propagate
+	 */
+	hit(i, j, propagate = 1) {
 		if (!this.map.valid(i, j)) return
 
 		let state = this.getState(i, j)
-		if (!force && state !== Game.HIDDEN) return
+		if (propagate <= 1 && state === Game.REVELED) return
 		this.setState(i, j, Game.REVELED)
 
 		let value = this.getValue(i, j)
 		if (value === Game.BOMB) console.log("boom")
-		if (!recurse || value != Game.EMPTY) return
+		if (propagate === 0 || value != Game.EMPTY) return
 		for (let [di, dj] of Game.DIRS) {
 			this.hit(i + di, j + dj)
 		}
@@ -598,7 +604,7 @@ function uncoverOnRect(rect) {
 
 	for (let i = tlI; i <= brI; i++) {
 		for (let j = tlJ; j <= brJ; j++) {
-			game.hit(i, j, recurse = false)
+			game.hit(i, j, propagate = 0)
 		}
 	}
 }
@@ -607,13 +613,13 @@ function propagateFromRect(rect) {
 	let { tlI, tlJ, brI, brJ } = renderer.mapRect(mainCtx, rect)
 
 	for (let i = tlI; i <= brI; i++) {
-		game.hit(i, tlJ, force = true, recurse = true)
-		game.hit(i, brJ, force = true, recurse = true)
+		game.hit(i, tlJ, propagate = 2)
+		game.hit(i, brJ, propagate = 2)
 	}
 
 	for (let j = tlJ; j <= brJ; j++) {
-		game.hit(tlI, j, force = true, recurse = true)
-		game.hit(brI, j, force = true, recurse = true)
+		game.hit(tlI, j, propagate = 2)
+		game.hit(brI, j, propagate = 2)
 	}
 }
 
@@ -625,7 +631,28 @@ function leftclick(ev) {
 	if (!canvasEvent(ev)) return
 	let x = ev.pageX, y = ev.pageY
 	let {i, j} = renderer.mapMouse(mainCtx, x, y)
-	game.hit(i, j)
+
+	let state = game.getState(i, j)
+	if (state === Game.REVELED) {
+		let count = game.getValue(i, j)
+		let nonflags = []
+		for (let [di, dj] of Game.DIRS) {
+			if (game.getState(i + di, j + dj) === Game.FLAG) {
+				count--
+			} else {
+				nonflags.push([i + di, j + dj])
+			}
+		}
+
+		if (count === 0) {
+			for (let [ni, nj] of nonflags) {
+				game.hit(ni, nj)
+			}
+		}
+	} else {
+		game.hit(i, j)
+	}
+
 	renderer.render(mainCtx, game)
 }
 
