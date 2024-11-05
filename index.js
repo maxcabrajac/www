@@ -371,8 +371,6 @@ function gen_bomb_sprite(ctx, cellSize) {
 	const spikeLen = sizes.spikeLen(cellSize)
 	const spikeWidth = sizes.spikeWidth(cellSize)
 
-	console.log(spikeLen, spikeWidth)
-
 	ctx.fillStyle = colors.background
 	ctx.fillRect(0, 0, cellSize, cellSize)
 	ctx.fillStyle = colors.bomb
