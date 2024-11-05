@@ -642,7 +642,7 @@ function leftclick(ev) {
 			}
 		}
 
-		if (count === 0) {
+		if (count <= 0) {
 			for (let [ni, nj] of nonflags) {
 				game.hit(ni, nj)
 			}
